@@ -26,13 +26,32 @@ class Post(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'Post From {self.user.username}'
+        return f'Post Boy {self.user.username}'
     
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
-    text =  models.TextField(max_length=400)
+    text =  models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return f'Comment {self.text[0:30]}'
+
+class Follow(models.Model):
+    follower = models.ForeignKey(User,on_delete=models.CASCADE,related_name='following')
+    following = models.ForeignKey(User,on_delete=models.CASCADE,related_name='followers')
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"Follow by {self.following}"
+    
+class Like(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='likes')
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post','user')
+
+    def __str__(self) -> str:
+        return f"{self.user.username} likes {self.post}"
