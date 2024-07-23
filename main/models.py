@@ -24,9 +24,9 @@ class Post(models.Model):
     image = models.ImageField(upload_to='posts/')
     caption = models.TextField(blank=True)
     create_at = models.DateTimeField(auto_now_add=True)
-
+    likes = models.ManyToManyField(User,related_name='likes')
     def __str__(self) -> str:
-        return f'Post Boy {self.user.username}'
+        return f'Post By {self.user.username}'
     
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -47,7 +47,7 @@ class Follow(models.Model):
     
 class Like(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='likes')
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='like')
     create_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -55,3 +55,18 @@ class Like(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} likes {self.post}"
+    
+# class Stream(models.Model):
+#     following = models.ForeignKey(User,on_delete=models.CASCADE,related_name='stream_followers')
+#     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='stream_user')
+#     post = models.ForeignKey(Post,on_delete=models.CASCADE)
+#     date = models.DateTimeField()
+
+#     def add_post(sender,instance,*args,**kwargs):
+#         post = instance
+#         user = post.user
+#         followers = Follow.objects.all().filter(following=user)
+#         for follower in followers:
+#             stream = Stream(post=post,user=follower.follower,date=create)
+
+

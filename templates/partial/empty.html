@@ -1,0 +1,19 @@
+def like_post(request,post_id):
+    post = Post.objects.get(id=post_id)
+    msg = False
+    if request.method == "POST":
+        
+        if request.user.is_authenticated:
+            user = request.user
+            
+            if post.likes.filter(id=user.id).exists():
+                post.likes.remove(user)
+                msg = False
+
+            else:
+                post.likes.add(user)
+                msg = True
+            return redirect('home')
+        
+    context = {"posts":post,"msg":msg}
+    return render(request,'home.html',context)
