@@ -1,1 +1,12 @@
+.ion{
+    margin: 40px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.ion img{
+    height: 350px;
+}
+
 
