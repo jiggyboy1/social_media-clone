@@ -24,7 +24,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='posts/')
     caption = models.TextField(blank=True)
     create_at = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User,related_name='likes')
+    likes = models.IntegerField(default=0)
     def __str__(self) -> str:
         return f'Post By {self.user.username}'
     
