@@ -12,21 +12,8 @@ def home(request):
 
 def post_detail(request,post_id):
     post = Post.objects.get(id=post_id)
-    user = request.user
-    current_like = post.likes
-    liked = Like.objects.filter(user=user,post=post).count()
-    msg = False
-    if not liked:
-        liked = Like.objects.create(user=user,post=post)
-        current_like = current_like + 1
-        msg = True
-    else:
-        liked = Like.objects.filter(user=user,post=post).delete()
-        current_like = current_like - 1
-        msg = False
 
-
-    context = {"post":post,'msg':msg}
+    context = {"post":post}
     return render(request,'post.html',context)
 
 def like_detail(request,like_post):
