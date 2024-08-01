@@ -32,3 +32,4 @@ def like_detail(request,like_post):
     post.likes = current_like
     post.save()
     return HttpResponseRedirect(reverse('post_detail',args=[like_post]))
+
