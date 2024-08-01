@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .models import Post,Like
+from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 # Create your views here.
 
@@ -33,3 +34,19 @@ def like_detail(request,like_post):
     post.save()
     return HttpResponseRedirect(reverse('post_detail',args=[like_post]))
 
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request,username=username,password=password,)
+        if user is not None:
+            login(request,user)
+            return redirect('home')
+
+    return render(request,'login.html',)
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+    
