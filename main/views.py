@@ -4,6 +4,7 @@ from .models import Post,Like
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from .forms import RegisterForm
+from django.contrib import messages
 # Create your views here.
 
 def home(request):
@@ -49,7 +50,20 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
+    messages.success(request,'You have logged out')
     return redirect('home')
     
 def register_user(request):
-    pass
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request,user)
+            return redirect('home')
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request,error)
+
+    context = {'form':form}
+    return render(request,'register.html',context)
