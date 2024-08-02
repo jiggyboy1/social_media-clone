@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Post,Like
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
+from .forms import RegisterForm
 # Create your views here.
 
 def home(request):
@@ -50,3 +51,5 @@ def logout_user(request):
     logout(request)
     return redirect('home')
     
+def register_user(request):
+    pass
