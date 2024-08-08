@@ -3,14 +3,20 @@
 {% block content %}
 
 
-{% if user.profile %}
+{% if profile %}
 
-    {{user.profile.bio}}
-    {% if user.profile.profile_picture %}
-    <img src="{{user.profile.profile_picture.url }}" alt="">
+    {{profile.bio}}
+    {% if profile.profile_picture %}
+    <img src="{{profile.profile_picture.url }}" alt="">
     {% else %}
     fghf
     {% endif %}
+
+    {% for post in pic %}
+        <img src="{{post.image.url}}" alt="" height="100">
+
+
+    {% endfor %}
 
 {% endif %}
 

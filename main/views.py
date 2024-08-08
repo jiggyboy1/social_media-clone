@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import Post,Like,Profile
 from django.contrib.auth import login,logout,authenticate
@@ -69,10 +69,12 @@ def register_user(request):
     context = {'form':form}
     return render(request,'register.html',context)
 
-def profile_user(request,user_id):
-    user = User.objects.get(id=user_id)
+def profile_user(request,username):
+    user = get_object_or_404(User,username=username)
+    profile = Profile.objects.get(user=user)
+    pic = user.post_set.all()
     
 
 
-    context = {'user':user}
+    context = {'profile':profile,'pic':pic}
     return render(request,'profile.html',context)
