@@ -5,6 +5,7 @@ from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from .forms import RegisterForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 # Create your views here.
 
 def home(request):
@@ -67,3 +68,10 @@ def register_user(request):
 
     context = {'form':form}
     return render(request,'register.html',context)
+
+def profile_user(request,user_id):
+    user = User.objects.get(id=user_id)
+
+
+    context = {}
+    return render(request,'profile.html',context)
