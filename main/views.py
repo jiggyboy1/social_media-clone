@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
-from .models import Post,Like
+from .models import Post,Like,Profile
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from .forms import RegisterForm
@@ -71,7 +71,8 @@ def register_user(request):
 
 def profile_user(request,user_id):
     user = User.objects.get(id=user_id)
+    
 
 
-    context = {}
+    context = {'user':user}
     return render(request,'profile.html',context)

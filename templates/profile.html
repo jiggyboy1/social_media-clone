@@ -3,11 +3,16 @@
 {% block content %}
 
 
+{% if user.profile %}
 
+    {{user.profile.bio}}
+    {% if user.profile.profile_picture %}
+    <img src="{{user.profile.profile_picture.url }}" alt="">
+    {% else %}
+    fghf
+    {% endif %}
 
-
-
-
+{% endif %}
 
 
 
