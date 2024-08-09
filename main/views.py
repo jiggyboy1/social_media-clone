@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Post,Like,Profile
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
-from .forms import RegisterForm
+from .forms import RegisterForm,Postform
 from django.contrib import messages
 from django.contrib.auth.models import User
 # Create your views here.
@@ -79,3 +79,18 @@ def profile_user(request,username):
     context = {'profile':profile,'pic':pic}
     return render(request,'profile.html',context)
 
+def upload(request):
+    form = Postform()
+
+    if request.method == 'POST':
+        form = Postform(request.POST,request.FILES)
+        if form.is_valid():
+            forms = form.save(commit=False)
+            forms.user = request.user
+            forms.save()
+        return redirect('home')
+
+
+
+    context = {'form':form}
+    return render(request,'upload_post.html',context)
