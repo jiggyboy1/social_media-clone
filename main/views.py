@@ -78,3 +78,4 @@ def profile_user(request,username):
 
     context = {'profile':profile,'pic':pic}
     return render(request,'profile.html',context)
+
