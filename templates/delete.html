@@ -1,0 +1,24 @@
+{% extends 'partial/main.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+
+
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+
+
+        <p>You sure you want to delete "{{post}}"</p>
+
+        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Go Back</a>
+        <input type="submit" value="confirm" class="btn btn-danger">
+    </form>
+</div>
+
+
+
+
+
+{% endblock content %}

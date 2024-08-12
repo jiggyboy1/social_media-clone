@@ -21,7 +21,14 @@ def post_detail(request,post_id):
     return render(request,'post.html',context)
 
 def delete_post(request,post_id):
-    pass
+    post_delete = Post.objects.get(id=post_id)
+    
+    if request.method == 'POST':
+        post_delete.delete()
+        return redirect('home')
+    
+    context = {"post":post_delete}
+    return render(request,'delete.html',context)
 
 def like_detail(request,like_post):
     user = request.user
