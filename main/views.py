@@ -20,6 +20,9 @@ def post_detail(request,post_id):
     context = {"post":post}
     return render(request,'post.html',context)
 
+def delete_post(request,post_id):
+    pass
+
 def like_detail(request,like_post):
     user = request.user
     post = Post.objects.get(id=like_post)
