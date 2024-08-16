@@ -104,3 +104,26 @@ def upload(request):
 
     context = {'form':form}
     return render(request,'upload_post.html',context)
+
+
+def update_upload(request,post_id):
+    post = Post.objects.get(id=post_id)
+    if request.user.is_authenticated:
+        if request.user == post.user :
+            post = Post.objects.get(id=post_id)
+            form = Postform(instance=post)
+
+            if request.method == 'POST':
+                form = Postform(request.POST,request.FILES,instance=post)
+                if form.is_valid():
+                    form.save()
+                    return redirect('home')
+    
+            context = {'form':form}
+            return render(request,'upload_post.html',context)
+        else:
+            messages.success(request,'you arent allowed here')
+            return redirect('home')
+    else:
+        return redirect('home')
+    

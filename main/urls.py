@@ -12,4 +12,5 @@ urlpatterns = [
     path('register',views.register_user,name='register'),
     path('<str:username>/',views.profile_user,name="profile"),
     path('upload',views.upload,name='upload'),
+    path('update_upload/<str:post_id>/',views.update_upload,name='update_upload'),
 ]
