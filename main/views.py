@@ -23,12 +23,23 @@ def post_detail(request,post_id):
 def delete_post(request,post_id):
     post_delete = Post.objects.get(id=post_id)
     
-    if request.method == 'POST':
-        post_delete.delete()
+    if request.user.is_authenticated:
+        if request.user == post_delete.user:
+            if request.method == 'POST':
+                post_delete.delete()
+                return redirect('home')
+            
+            context = {"post":post_delete}
+            return render(request,'delete.html',context)
+        else:
+            messages.error(request,"You aren't allowed here")
+            return redirect('home')
+        
+    else:
+        messages.error(request,"You must log in to preform any action")
         return redirect('home')
     
-    context = {"post":post_delete}
-    return render(request,'delete.html',context)
+    
 
 def like_detail(request,like_post):
     user = request.user
@@ -125,5 +136,6 @@ def update_upload(request,post_id):
             messages.success(request,'you arent allowed here')
             return redirect('home')
     else:
+        messages.error(request,"You must log in to preform any action")
         return redirect('home')
     
