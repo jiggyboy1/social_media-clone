@@ -20,6 +20,11 @@
 
 {% endif %}
 
+<form action="{% url 'follow' profile.user.username %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Follow </button>
+</form>
+
 {{request.user}}
 
 {% endblock content %}

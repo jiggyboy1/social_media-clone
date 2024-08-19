@@ -43,7 +43,7 @@ class Follow(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"Follow by {self.following}"
+        return f"Following {self.following}"
     
 class Like(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)

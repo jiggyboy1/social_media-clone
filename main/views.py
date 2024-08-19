@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect
-from .models import Post,Like,Profile
+from .models import Post,Like,Profile,Follow
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from .forms import RegisterForm,Postform
@@ -138,4 +138,11 @@ def update_upload(request,post_id):
     else:
         messages.error(request,"You must log in to preform any action")
         return redirect('home')
-    
+
+
+def follow_user(request,username):
+    user_to_follow = get_object_or_404(User,username=username)
+
+    if user_to_follow != request.user:
+        Follow.objects.get_or_create(follower=request.user,following=user_to_follow)
+        return redirect('profile',username=user_to_follow)
