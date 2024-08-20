@@ -19,11 +19,14 @@
     {% endfor %}
 
 {% endif %}
-
+{% if following %}
+hiiii
+{% else%}
 <form action="{% url 'follow' profile.user.username %}" method="post">
     {% csrf_token %}
-    <button type="submit">Follow </button>
+    <button type="submit" class="btn btn-primary">Follow </button>
 </form>
+{% endif %}
 
 {{request.user}}
 

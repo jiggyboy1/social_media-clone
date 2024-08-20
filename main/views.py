@@ -94,10 +94,12 @@ def profile_user(request,username):
     user = get_object_or_404(User,username=username)
     profile = Profile.objects.get(user=user)
     pic = user.post_set.all()
+    following = Follow.objects.filter(following=user)
+
     
 
 
-    context = {'profile':profile,'pic':pic}
+    context = {'profile':profile,'pic':pic,'following':following}
     return render(request,'profile.html',context)
 
 def upload(request):
@@ -145,4 +147,5 @@ def follow_user(request,username):
 
     if user_to_follow != request.user:
         Follow.objects.get_or_create(follower=request.user,following=user_to_follow)
+        messages.success(request,'You have follow this user')
         return redirect('profile',username=user_to_follow)
