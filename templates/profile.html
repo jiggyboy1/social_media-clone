@@ -20,7 +20,10 @@
 
 {% endif %}
 {% if following %}
-hiiii
+<form action="{% url 'unfollow' profile.user.username %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Unfollow </button>
+</form>
 {% else%}
 <form action="{% url 'follow' profile.user.username %}" method="post">
     {% csrf_token %}

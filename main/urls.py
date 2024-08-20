@@ -13,5 +13,6 @@ urlpatterns = [
     path('<str:username>/',views.profile_user,name="profile"),
     path('upload',views.upload,name='upload'),
     path('follow/<str:username>/',views.follow_user,name="follow"),
+    path('unfollow/<str:username>/',views.unfollow_user,name="unfollow"),
     path('update_upload/<str:post_id>/',views.update_upload,name='update_upload'),
 ]

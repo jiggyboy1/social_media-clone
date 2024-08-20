@@ -149,3 +149,17 @@ def follow_user(request,username):
         Follow.objects.get_or_create(follower=request.user,following=user_to_follow)
         messages.success(request,'You have follow this user')
         return redirect('profile',username=user_to_follow)
+    else:
+        messages.success(request,"You can't follow yourself")
+        return redirect('profile',username=user_to_follow)
+    
+
+def unfollow_user(request,username):
+    user_to_unfollow = get_object_or_404(User,username=username)
+    if user_to_unfollow != request.user:
+        Follow.objects.filter(follower=request.user,following=user_to_unfollow).delete()
+        messages.success(request,'You have unfollow this user')
+        return redirect('profile',username=user_to_unfollow)
+    else:
+        messages.success(request,"You can't unfollow yourself")
+        return redirect('profile',username=user_to_unfollow)
