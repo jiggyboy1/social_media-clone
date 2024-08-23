@@ -12,13 +12,17 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     posts = Post.objects.all().order_by('-create_at')
     
+
+
     context = {"posts":posts}
     return render(request,'home.html',context)
 
 def post_detail(request,post_id):
     post = Post.objects.get(id=post_id)
+    liked = Like.objects.filter(user=request.user,post=post)
+    
 
-    context = {"post":post}
+    context = {"post":post,'liked':liked}
     return render(request,'post.html',context)
 
 def delete_post(request,post_id):
