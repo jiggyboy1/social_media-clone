@@ -6,6 +6,7 @@ from django.urls import reverse
 from .forms import RegisterForm,Postform
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
@@ -90,11 +91,12 @@ def register_user(request):
     context = {'form':form}
     return render(request,'register.html',context)
 
+@login_required(login_url='login')
 def profile_user(request,username):
     user = get_object_or_404(User,username=username)
     profile = Profile.objects.get(user=user)
     pic = user.post_set.all()
-    following = Follow.objects.filter(following=user)
+    following = Follow.objects.filter(follower=request.user,following=user)
 
     
 
@@ -102,6 +104,7 @@ def profile_user(request,username):
     context = {'profile':profile,'pic':pic,'following':following}
     return render(request,'profile.html',context)
 
+@login_required(login_url='login')
 def upload(request):
     form = Postform()
 
@@ -141,7 +144,7 @@ def update_upload(request,post_id):
         messages.error(request,"You must log in to preform any action")
         return redirect('home')
 
-
+@login_required(login_url='login')
 def follow_user(request,username):
     user_to_follow = get_object_or_404(User,username=username)
 
@@ -154,6 +157,7 @@ def follow_user(request,username):
         return redirect('profile',username=user_to_follow)
     
 
+@login_required(login_url='login')
 def unfollow_user(request,username):
     user_to_unfollow = get_object_or_404(User,username=username)
     if user_to_unfollow != request.user:
