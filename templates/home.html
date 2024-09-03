@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
 
-
+<br>
 <div class="container">
     <div class="row">
-        <div class="col-9">
+        <div class="col-12">
             {% for post in posts%}
             <div class="card col-sm-8 mb-4 card border-light">
-                <a href="{% url 'post_detail' post.id %}"><img src="{{post.image.url}}" class="card-img-top" alt="..."></a>
+                <a href="{% url 'post_detail' post.id %}"><img src="{{post.image.url}}" class="card-img-top" alt="..." height="450"></a>
                 <div class="card-body">
                     <div class="run">
                         <a href="{% url 'like_detail' post.id %}">
@@ -21,7 +21,7 @@
                         </svg> &nbsp;
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cursor" viewBox="0 0 16 16">
                             <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52z"/>
-                        </svg> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                        </svg>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                             <div class="btn-group">
                                 <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                   Action
@@ -30,7 +30,7 @@
                                   <li><a class="dropdown-item" href="{% url 'update_upload' post.id%}">Edit</a></li>
                                   <li><a class="dropdown-item" href="{% url 'delete' post.id %}">Delete</a></li>
                                 </ul>
-                              </div>
+                            </div>
                         
                     </div>
                     {{post.likes}}
@@ -44,9 +44,6 @@
         </div>
 
     
-        <div class="col-3">
-            hiiii
-        </div>
-    </div>
+        
 </div>
 {% endblock %}

@@ -19,11 +19,14 @@ def home(request):
 
 def post_detail(request,post_id):
     post = Post.objects.get(id=post_id)
-    liked = Like.objects.filter(user=request.user,post=post)
+    if request.user.is_authenticated:
+        liked = Like.objects.filter(user=request.user,post=post)
     
-
-    context = {"post":post,'liked':liked}
-    return render(request,'post.html',context)
+        context = {"post":post,'liked':liked}
+        return render(request,'post.html',context)
+    else:
+        context = {"post":post}
+        return render(request,'post.html',context)
 
 def delete_post(request,post_id):
     post_delete = Post.objects.get(id=post_id)
@@ -47,21 +50,26 @@ def delete_post(request,post_id):
     
 
 def like_detail(request,like_post):
-    user = request.user
-    post = Post.objects.get(id=like_post)
-    current_like = post.likes
-    liked = Like.objects.filter(user=user,post=post).count()
+    if request.user.is_authenticated:
+        user = request.user
+        post = Post.objects.get(id=like_post)
+        current_like = post.likes
+        liked = Like.objects.filter(user=user,post=post).count()
+        
+    
+        if not liked:
+            liked = Like.objects.create(user=user,post=post)
+            current_like = current_like + 1
+        else:
+            liked = Like.objects.filter(user=user,post=post).delete()
+            current_like = current_like - 1
 
-    if not liked:
-        liked = Like.objects.create(user=user,post=post)
-        current_like = current_like + 1
+        post.likes = current_like
+        post.save()
+        return HttpResponseRedirect(reverse('post_detail',args=[like_post]))
     else:
-        liked = Like.objects.filter(user=user,post=post).delete()
-        current_like = current_like - 1
-
-    post.likes = current_like
-    post.save()
-    return HttpResponseRedirect(reverse('post_detail',args=[like_post]))
+        messages.success(request,'You cant like without log in')
+        return redirect('home')
 
 def login_user(request):
     if request.method == 'POST':
