@@ -27,8 +27,13 @@
                                   Action
                                 </button>
                                 <ul class="dropdown-menu">
+                                    {% if request.user == post.user%}
                                   <li><a class="dropdown-item" href="{% url 'update_upload' post.id%}">Edit</a></li>
                                   <li><a class="dropdown-item" href="{% url 'delete' post.id %}">Delete</a></li>
+                                    {% else  %}
+                                    <li><a class="dropdown-item" href="#">HI</a></li>
+                                    {% endif %}
+
                                 </ul>
                             </div>
                         

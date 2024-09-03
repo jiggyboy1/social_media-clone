@@ -12,9 +12,10 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     posts = Post.objects.all().order_by('-create_at')
     
+    
 
 
-    context = {"posts":posts}
+    context = {"posts":posts,}
     return render(request,'home.html',context)
 
 def post_detail(request,post_id):
@@ -179,3 +180,7 @@ def unfollow_user(request,username):
     else:
         messages.success(request,"You can't unfollow yourself")
         return redirect('profile',username=user_to_unfollow)
+
+
+def search(request):
+    pass
