@@ -6,6 +6,7 @@ from django.urls import reverse
 from .forms import RegisterForm,Postform
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -183,4 +184,17 @@ def unfollow_user(request,username):
 
 
 def search(request):
-    pass
+    if request.method == 'POST':
+        searched = request.POST.get('search')
+        user = User.objects.filter(Q(username__icontains=searched))
+
+        if not searched:
+            messages.success(request,'Please Type Something....')
+
+        if not user :
+            messages.success(request,'That Username Doesn\'t exist ')
+            return render(request,'search.html' )
+        
+
+    context = {'searched':searched,'users':user}
+    return render(request,'search.html',context )
