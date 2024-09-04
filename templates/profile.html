@@ -2,15 +2,71 @@
 {% load static %}
 {% block content %}
 
+<style>
+    #pic{
+        float: right;
+    }
+    
+    .combine{
+        position: absolute;
+    }
+    
+</style>
 
-{% if profile %}
-    {{profile.user}}
-    {{profile.bio}}
-    {% if profile.profile_picture %}
-    <img src="{{profile.profile_picture.url }}" alt="">
-    {% else %}
-    fghf
+<div class="container">
+
+    <div class="combine">
+
+        {% if profile.profile_picture %}
+        <img src="{{profile.profile_picture.url }}" alt="" width="20%" class="rounded-circle" id="pic">
+        {% else %}
+        <img src="{% static 'media/profile_picture/download.jpg' %}" alt="" id="pic">
+        {% endif %}
+
+        
+        <p>
+            my name
+        </p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    {% if profile.user != request.user %}
+        {% if following %}
+        <form action="{% url 'unfollow' profile.user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Unfollow </button>
+        </form>
+        {% else%}
+        <form action="{% url 'follow' profile.user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Follow </button>
+        </form>
+        {% endif %}
     {% endif %}
+
+    followers : {{profile.user.followers.count}}
+    following : {{profile.user.following.count}}
+
+
+    <p>{{request.user}}</p>
+
+
+
+
 
     {% for post in pic %}
         <img src="{{post.image.url}}" alt="" height="100">
@@ -18,25 +74,7 @@
 
     {% endfor %}
 
-{% endif %}
-{% if profile.user != request.user %}
-    {% if following %}
-    <form action="{% url 'unfollow' profile.user.username %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Unfollow </button>
-    </form>
-    {% else%}
-    <form action="{% url 'follow' profile.user.username %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Follow </button>
-    </form>
-    {% endif %}
-{% endif %}
-
-followers : {{profile.user.followers.count}}
-following : {{profile.user.following.count}}
 
 
-<p>{{request.user}}</p>
-
+</div>
 {% endblock content %}
