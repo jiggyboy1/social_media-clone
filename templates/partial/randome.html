@@ -1,0 +1,29 @@
+{% if profile.user != request.user %}
+        {% if following %}
+        <form action="{% url 'unfollow' profile.user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Unfollow </button>
+        </form>
+        {% else%}
+        <form action="{% url 'follow' profile.user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Follow </button>
+        </form>
+        {% endif %}
+    {% endif %}
+
+    followers : {{profile.user.followers.count}}
+    following : {{profile.user.following.count}}
+
+
+    <p>{{request.user}}</p>
+
+
+
+
+
+    {% for post in pic %}
+        <img src="{{post.image.url}}" alt="" height="100">
+
+
+    {% endfor %}

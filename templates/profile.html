@@ -4,75 +4,84 @@
 
 <style>
     #pic{
-        float: right;
+        float: left;
+        margin-right: 15px;
     }
     
-    .combine{
-        position: absolute;
-    }
+    
     
 </style>
-
+<br>
 <div class="container">
 
-    <div class="combine">
-
+    
         {% if profile.profile_picture %}
-        <img src="{{profile.profile_picture.url }}" alt="" width="20%" class="rounded-circle" id="pic">
+        <img src="{{profile.profile_picture.url }}" alt="" width="25%" class="rounded-circle" id="pic">
         {% else %}
-        <img src="{% static 'media/profile_picture/download.jpg' %}" alt="" id="pic">
+        <img src="{% static 'media/profile_picture/download.jpg' %}" alt="" id="pic" >
         {% endif %}
 
         
-        <p>
-            my name
-        </p>
+        <p style="font-size: large;" >
+            @<b>{{profile.user}}</b> 
 
-    </div>
+
+            <br>
+            Followers : {{profile.user.followers.count}} &nbsp; 
+            Following : {{profile.user.following.count}} &nbsp;
+            Posts : {{pic.count}} <br>
+        
+            
+            {% if profile.user != request.user %}
+                {% if following %}
+                <form action="{% url 'unfollow' profile.user.username %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Unfollow </button>
+                    <button type="button" class="btn btn-primary" >Message</button>
+                </form>
+                {% else%}
+                <form action="{% url 'follow' profile.user.username %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Follow </button>
+                </form>
+                {% endif %}
+            {% endif %}
+            <br>
+        </p>    
+            
+        
+
+            <hr>
+
+        <br><br><br>
+        <div style="font-size: large;">
+            <b>{{profile.user.first_name}}  {{profile.user.last_name}}</b>
+            <br>
+            {% if profile.bio %}
+                    <pre>{{profile.bio}}</pre>
+            {% else %}
+                Write A Bio
+            {% endif %} <br>
+
+            <button type="button" class="btn btn-outline-primary">Edit Profile</button>
+        </div>    
+
+        
+        <div align="center" style="font-size: large;">
+                <b>Post</b>
+        </div>
+        
+
+
+
+
+
 
     
 
 
 
-
-
-
-
-
-
     
-
-
-
-    {% if profile.user != request.user %}
-        {% if following %}
-        <form action="{% url 'unfollow' profile.user.username %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Unfollow </button>
-        </form>
-        {% else%}
-        <form action="{% url 'follow' profile.user.username %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Follow </button>
-        </form>
-        {% endif %}
-    {% endif %}
-
-    followers : {{profile.user.followers.count}}
-    following : {{profile.user.following.count}}
-
-
-    <p>{{request.user}}</p>
-
-
-
-
-
-    {% for post in pic %}
-        <img src="{{post.image.url}}" alt="" height="100">
-
-
-    {% endfor %}
 
 
 
