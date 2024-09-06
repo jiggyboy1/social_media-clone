@@ -45,15 +45,16 @@
                     <button type="submit" class="btn btn-primary">Follow </button>
                 </form>
                 {% endif %}
+            {% else %}
+                <a href="#" class="btn btn-outline-primary" role="button">Edit Profile</a>
             {% endif %}
-            <br>
         </p>    
             
         
 
             <hr>
 
-        <br><br><br>
+        <br>
         <div style="font-size: large;">
             <b>{{profile.user.first_name}}  {{profile.user.last_name}}</b>
             <br>
@@ -63,7 +64,7 @@
                 Write A Bio
             {% endif %} <br>
 
-            <button type="button" class="btn btn-outline-primary">Edit Profile</button>
+            
         </div>    
 
         
