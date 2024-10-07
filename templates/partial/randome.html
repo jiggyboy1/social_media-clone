@@ -27,3 +27,12 @@
 
 
     {% endfor %}
+
+
+
+
+    {% if user.profile.profile_picture %}
+                <img src="{{user.profile.profile_picture.url}}" alt=""  width="20%" style="height: 90%;" class="rounded-circle"> &nbsp; <b><a href="{% url 'profile' user.username %}">@{{user.username}}</a></b>  <br>
+                {% else %}
+                <img src="{% static 'media/profile_picture/download.jpg' %}" alt=""  width="20%" style="height: 90%;" class="rounded-circle">  &nbsp; <b><a href="{% url 'profile' user.username %}">@{{user.username}}</a></b>  <br>
+                {% endif %}
