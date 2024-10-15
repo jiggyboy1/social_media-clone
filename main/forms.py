@@ -1,5 +1,5 @@
 from typing import Any
-from .models import Post
+from .models import Post,Profile
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -30,3 +30,14 @@ class Postform(forms.ModelForm):
         widgets = {
             'caption': forms.Textarea(attrs={'class':'form-control','placeholder':'Enter a caption'}),
         }
+
+class ProfileEdit(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio','profile_picture']
+
+        widgets = {
+            'bio': forms.Textarea(attrs={'class':'form-control','placeholder':'Enter A Bio'}),
+        }
+
+

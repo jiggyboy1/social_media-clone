@@ -25,8 +25,10 @@
             <div class="searched-place">
                 {% if user.profile.profile_picture %}
                 <img src="{{user.profile.profile_picture.url}}" alt=""  width="13%" style="height: 70%;" class="rounded-circle"> &nbsp; <b><a href="{% url 'profile' user.username %}">@{{user.username}}</a></b>  <br>
+                <hr>
                 {% else %}
                 <img src="{% static 'media/profile_picture/download.jpg' %}" alt=""  width="13%" style="height: 70%;" class="rounded-circle">  &nbsp; <b><a href="{% url 'profile' user.username %}">@{{user.username}}</a></b>  <br>
+                <hr>
                 {% endif %}
             </div>
            

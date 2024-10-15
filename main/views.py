@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Post,Like,Profile,Follow
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
-from .forms import RegisterForm,Postform
+from .forms import RegisterForm,Postform,ProfileEdit
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -122,6 +122,7 @@ def profile_user(request,username):
 
     context = {'profile':profile,'pic':pic,'following':following}
     return render(request,'profile.html',context)
+
 
 @login_required(login_url='login')
 def upload(request):
