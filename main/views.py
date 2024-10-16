@@ -133,12 +133,12 @@ def editprofile(request,username):
             edit = ProfileEdit(request.POST,request.FILES,instance=profiles)
             if edit.is_valid():
                 edit.save()
-                return redirect('profile')
+                return redirect('profile',profile)
 
         context = {'profile':profile,'edit':edit}
         return render(request,'editprofile.html',context)
     else:
-        messages.success(request,'You aren'/'t allowed here')
+        messages.success(request,'You aren\'t allowed here')
         return redirect('home')
 
 @login_required(login_url='login')

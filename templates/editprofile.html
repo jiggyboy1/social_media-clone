@@ -3,9 +3,19 @@
 {% block content %}
 
 
+<div class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        <h2>Your Information</h2>
+        {{edit}}
+        <button class="btn btn-outline-success">Sumbit</button>
+
+    </form>
 
 
-{{edit}}
+</div>
+
 
 
 
