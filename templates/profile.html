@@ -46,7 +46,7 @@
                 </form>
                 {% endif %}
             {% else %}
-                <a href= "#" class="btn btn-outline-primary" role="button">Edit Profile</a>
+                <a href= "{% url 'editprofile' request.user %}" class="btn btn-outline-primary" role="button">Edit Profile</a>
             {% endif %}
         </p>    
             

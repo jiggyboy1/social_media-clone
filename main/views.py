@@ -123,6 +123,23 @@ def profile_user(request,username):
     context = {'profile':profile,'pic':pic,'following':following}
     return render(request,'profile.html',context)
 
+def editprofile(request,username):
+    profile = User.objects.get(username=username)
+    if profile == request.user:
+        profiles = Profile.objects.get(user=profile)
+        edit = ProfileEdit(instance=profiles)
+
+        if request.method == "POST":
+            edit = ProfileEdit(request.POST,request.FILES,instance=profiles)
+            if edit.is_valid():
+                edit.save()
+                return redirect('profile')
+
+        context = {'profile':profile,'edit':edit}
+        return render(request,'editprofile.html',context)
+    else:
+        messages.success(request,'You aren'/'t allowed here')
+        return redirect('home')
 
 @login_required(login_url='login')
 def upload(request):
