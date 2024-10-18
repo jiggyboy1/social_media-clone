@@ -107,15 +107,13 @@ def register_user(request):
 
 @login_required(login_url='login')
 def profile_user(request,username):
-    try:
-        user = get_object_or_404(User,username=username)
-        profile = Profile.objects.get(user=user)
-        pic = user.post_set.all()
-        following = Follow.objects.filter(follower=request.user,following=user)
+    
+    user = get_object_or_404(User,username=username)
+    profile = Profile.objects.get(user=user)
+    pic = user.post_set.all()
+    following = Follow.objects.filter(follower=request.user,following=user)
 
-    except :
-        messages.success(request,'doesnt exist')
-        return redirect('home')
+    
 
     
 
